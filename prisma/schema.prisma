@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model config {
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime   @updatedAt() @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime?  @map("deleted_at") @db.Timestamptz(6)
+  url       String     @map("url")
+  dataset   Int        @map("dataset")
+  format    String?    @map("format")
+  filename  String?    @map("name")
+  data      String     @map("selector")
+  startDate DateTime   @map("start_date")
+  endDate   DateTime   @map("end_date")
+  scraped   scraped[]
+  district  district[]
+
+  @@map("configs")
+}
+
+// model selector {
+//   id        Int       @id @default(autoincrement())
+//   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+//   updatedAt DateTime  @updatedAt() @map("updated_at") @db.Timestamptz(6)
+//   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+//   data      String    @map("selector")
+//   config    config[]
+
+//   @@map("selectors")
+// }
+
+model district {
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt() @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  name      String
+  lat       Float
+  long      Float
+  config    config?   @relation(fields: [configId], references: [id])
+  configId  Int?
+  scraped   scraped[]
+
+  @@map("districts")
+}
+
+model scraped {
+  id         Int       @id @default(autoincrement())
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt  DateTime  @updatedAt() @map("updated_at") @db.Timestamptz(6)
+  deletedAt  DateTime? @map("deleted_at") @db.Timestamptz(6)
+  day        String
+  level      String
+  AQI        Int
+  weather    String?
+  max_temp   String
+  min_temp   String
+  wind       String
+  config     config    @relation(fields: [configId], references: [id])
+  configId   Int       @map("configId")
+  district   district  @relation(fields: [districtId], references: [id])
+  districtId Int       @map("districtId")
+
+  @@map("scrapeds")
+}
+
+// model scraped {
+//   id        Int       @id @default(autoincrement())
+//   createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+//   updatedAt DateTime  @updatedAt() @map("updated_at") @db.Timestamptz(6)
+//   deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+
+//   @@map("scraped")
+// }

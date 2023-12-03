@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "scrapeds" ALTER COLUMN "max_temp" SET DATA TYPE TEXT,
+ALTER COLUMN "min_temp" SET DATA TYPE TEXT;

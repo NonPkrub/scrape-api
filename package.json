@@ -1,0 +1,31 @@
+{
+    "name": "scrape-api",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "type": "module",
+    "scripts": {
+        "start": "node index.js",
+        "dev": "nodemon index.js",
+        "migrate": "prisma migrate dev",
+        "generate": "npx prisma generate",
+        "test": "nodemon test.js"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@fastify/cors": "^8.3.0",
+        "@fastify/swagger": "^7.6.1",
+        "@prisma/client": "^4.16.2",
+        "axios": "^1.4.0",
+        "dayjs": "^1.11.10",
+        "dotenv": "^16.3.1",
+        "fastify": "^4.19.2",
+        "node-cron": "^3.0.3",
+        "os": "^0.1.2",
+        "prisma": "^4.16.2",
+        "puppeteer": "^21.3.4",
+        "puppeteer-core": "^21.3.6"
+    }
+}
