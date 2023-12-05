@@ -11,19 +11,18 @@ datasource db {
 }
 
 model config {
-  id        Int        @id @default(autoincrement())
-  createdAt DateTime   @default(now()) @map("created_at") @db.Timestamptz(6)
-  updatedAt DateTime   @updatedAt() @map("updated_at") @db.Timestamptz(6)
-  deletedAt DateTime?  @map("deleted_at") @db.Timestamptz(6)
-  url       String     @map("url")
-  dataset   Int        @map("dataset")
-  format    String?    @map("format")
-  filename  String?    @map("name")
-  data      String     @map("selector")
-  startDate DateTime   @map("start_date")
-  endDate   DateTime   @map("end_date")
+  id        Int       @id @default(autoincrement())
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt DateTime  @updatedAt() @map("updated_at") @db.Timestamptz(6)
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz(6)
+  url       String    @map("url")
+  dataset   Int       @map("dataset")
+  format    String?   @map("format")
+  filename  String?   @map("name")
+  data      String    @map("selector")
+  startDate DateTime  @map("start_date")
+  endDate   DateTime  @map("end_date")
   scraped   scraped[]
-  district  district[]
 
   @@map("configs")
 }
@@ -47,7 +46,6 @@ model district {
   name      String
   lat       Float
   long      Float
-  config    config?   @relation(fields: [configId], references: [id])
   configId  Int?
   scraped   scraped[]
 
