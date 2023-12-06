@@ -21,7 +21,7 @@ const scrape = async (request, reply) => {
       waitUntil: "domcontentloaded",
     });
 
-    await page.waitForTimeout(5000);
+    // await page.waitForTimeout(5000);
 
     let previousHeight = 0;
     let currentHeight = await page.evaluate("document.body.scrollHeight");

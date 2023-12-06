@@ -31,13 +31,17 @@ app.register(districtRoutes, { prefix: "/api" });
 app.get("/", (req, res) => {
   res.send({ message: "success" });
 });
+app.post("/run-cron-job", (req, res) => {
+  myCronJob();
+  res.status(200).send("Cron job executed");
+});
 
 const start = async () => {
   try {
     await app.listen({ port: config.port, host: config.host });
     console.log("Server is listening on port:8080");
-    cron.schedule("0 9 * * *", myCronJob);
-    //cron.schedule("*/5 * * * *", myCronJob);
+    //cron.schedule("0 9 * * *", myCronJob);
+    // cron.schedule("*/5 * * * *", myCronJob);
   } catch (error) {
     console.error("Error starting server:", error);
     process.exit(1);
