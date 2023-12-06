@@ -215,19 +215,11 @@ const onlineScrape = async (request, reply) => {
       console.log({ data: result1 });
 
       for (const stringValue of result1) {
-        // Splitting the string using a comma as the delimiter
         const separatedValues = stringValue.split(",");
         const currentTimestamp = Date.now();
-
-        // Check if the weather value is a percentage
         const isPercentage = separatedValues[4].includes("%");
-
-        // Replace null values when the weather value is a percentage
         const weatherValue = isPercentage ? separatedValues[4] : "N/A";
-
         const modifiedValues = [...separatedValues];
-
-        // Insert the modified weather value at index 4
         const conditon = isPercentage
           ? modifiedValues
           : modifiedValues.splice(4, 0, weatherValue);
@@ -242,7 +234,6 @@ const onlineScrape = async (request, reply) => {
           wind: modifiedValues[7],
         };
 
-        // Perform data creation for each set of data
         const createData = await prisma.$transaction(async (tx) => {
           const config = await tx.config.findUnique({
             where: { id: request },
